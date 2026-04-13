@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import TarefaItem from './components/TarefaItem.vue'
 const tarefas = ref([
   {
     id: 1,
@@ -33,15 +34,24 @@ const tarefasFiltradas = computed(() => {
     return tarefas.value;
   }
 })
+
+function alerta(mensagem) {
+  alert(`O status desta tarefa é ${mensagem}`);
+}
 </script>
 
 <template>
   <div class="container">
     <h1>Lista de Tarefas</h1>
     <ul>
-      <li v-for="item in tarefasFiltradas" :key="item.id">
-        {{ item.tarefa }}
-      </li>
+      <TarefaItem v-for="tarefa in tarefasFiltradas"
+      :key="tarefa.id"
+      :id="tarefa.id"
+      :status="tarefa.status"
+      @clique="alerta"
+      >
+      {{ tarefa.tarefa }}
+      </TarefaItem>
     </ul>
     <input type="text" placeholder="Filtrar tarefa" v-model="filtro" />
   </div>
